@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+    --color-background: #fffaf1;
+    --color-surface: #ffffff;
+    --color-text: #17456f;
+    --color-muted: #647b8c;
+
+    --color-yellow: #ffca55;
+    --color-blue: #38a9f5;
+    --color-mint: #54cbd0;
+    --color-coral: #ff8278;
+    --color-laventer: #a18af4;
+
+    --radius-card: 28px;
+    --radius-button: 22px;
+    --shadow-card: 0 8px 22px rgb(23 69 111 / 10%);
+}
+
+*{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+}

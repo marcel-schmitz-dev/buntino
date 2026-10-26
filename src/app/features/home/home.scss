@@ -1,0 +1,173 @@
+
+.home {
+  width: min(100%, 1100px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    color: #2588e8;
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+
+    span {
+      color: var(--color-yellow);
+    }
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+  }
+}
+
+.icon-button {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  box-shadow: var(--shadow-card);
+}
+
+.welcome {
+  max-width: 540px;
+  margin: 32px auto 24px;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 8px;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+.mode-grid,
+.world-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.mode-card {
+  padding: 20px;
+  border: 3px solid white;
+  border-radius: var(--radius-card);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+
+  h3 {
+    margin: 8px 0;
+    font-size: 1.6rem;
+  }
+
+  p {
+    margin: 0 0 16px;
+  }
+
+  button {
+    width: 100%;
+    min-height: 56px;
+    border: 0;
+    border-radius: var(--radius-button);
+    background: #fff;
+    color: var(--color-text);
+    font-weight: 800;
+  }
+}
+
+.discover {
+  background: #ffe8a0;
+}
+
+.research {
+  background: #c8ecff;
+}
+
+.mascot {
+  font-size: 4rem;
+}
+
+.worlds {
+  margin-top: 32px;
+
+  h2 {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+}
+
+.world-card {
+  display: grid;
+  min-height: 112px;
+  place-items: center;
+  gap: 6px;
+  padding: 12px;
+  border: 3px solid white;
+  border-radius: 22px;
+  color: var(--color-text);
+  font-weight: 800;
+  box-shadow: var(--shadow-card);
+}
+
+.world-emoji {
+  font-size: 2.4rem;
+}
+
+.pink {
+  background: #ffd9ec;
+}
+
+.blue {
+  background: #c9edff;
+}
+
+.green {
+  background: #d7f5bd;
+}
+
+.purple {
+  background: #e8dcff;
+}
+
+footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 600px) {
+  .home {
+    padding: 28px 24px 40px;
+  }
+
+  .mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .world-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mode-card {
+    padding: 28px 20px;
+  }
+}
