@@ -1,1 +1,45 @@
-<p>color-game works!</p>
+
+<main class="game">
+  <header>
+    <button class="back-button" (click)="back.emit()">← Zurück</button>
+    <span>Frage {{ questionIndex + 1 }} von {{ questions.length }}</span>
+  </header>
+
+  @if (!finished) {
+    <section class="question">
+      <div class="fruit">{{ question.emoji }}</div>
+      <h1>Welche Farbe ist das?</h1>
+      <p>Tippe auf die passende Farbe!</p>
+
+      <div class="answers">
+        @for (option of question.options; track option.name) {
+          <button
+            class="answer"
+            [style.background]="option.color"
+            [attr.aria-label]="option.name"
+            (click)="choose(option.name)"
+          >
+            <span>{{ option.name }}</span>
+          </button>
+        }
+      </div>
+
+      @if (feedback) {
+        <div class="feedback" aria-live="polite">
+          <h2>{{ feedback }}</h2>
+          <button class="next-button" (click)="next()">
+            {{ questionIndex === questions.length - 1 ? 'Fertig!' : 'Weiter →' }}
+          </button>
+        </div>
+      }
+    </section>
+  } @else {
+    <section class="question">
+      <div class="fruit">🏆</div>
+      <h1>Das hast du toll gemacht!</h1>
+      <p>Du hast alle drei Fragen gespielt.</p>
+      <button class="next-button" (click)="restart()">Nochmal spielen</button>
+      <button class="back-button" (click)="back.emit()">Level-Auswahl</button>
+    </section>
+  }
+</main>
