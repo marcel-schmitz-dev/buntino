@@ -1,2 +1,15 @@
-<app-home />
-<router-outlet />
+@if (screen === 'home') {
+  <app-home (selectMode)="openLevels($event)" />
+}
+
+@if (screen === 'levels') {
+  <app-level-select
+    [mode]="mode"
+    (back)="goHome()"
+    (startLevel)="startLevel($event)"
+  />
+}
+
+@if (screen === 'game') {
+  <app-color-game (back)="goToLevels()" />
+}
