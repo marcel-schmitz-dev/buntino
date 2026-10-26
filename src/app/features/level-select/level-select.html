@@ -1,1 +1,43 @@
-<p>level-select works!</p>
+<main class="level-page">
+  <header class="level-header">
+    <button class="icon-button" (click)="back.emit()" aria-label="Zurück">←</button>
+
+    <div class="heading">
+      <div class="rainbow">🌈</div>
+      <h1>Farben</h1>
+      <p>Welche Farbe ist das?</p>
+    </div>
+
+    <button class="icon-button" aria-label="Ton">🔊</button>
+  </header>
+
+  <div class="level-grid">
+    @for (level of levels; track level.id) {
+      <button
+        class="level-card"
+        [class.locked]="!isUnlocked(level.id)"
+        [disabled]="!isUnlocked(level.id)"
+        (click)="startLevel.emit(level.id)"
+      >
+        <div class="card-top">
+          <span class="level-number">{{ level.id }}</span>
+          <span class="stars" aria-label="Drei mögliche Sterne">
+            @for (star of [1, 2, 3]; track star) {
+              <span [class.earned]="star <= level.stars">★</span>
+            }
+          </span>
+        </div>
+
+        <span class="level-emoji">{{ level.emoji }}</span>
+        <strong>{{ level.title }}</strong>
+        <small>{{ level.subtitle }}</small>
+
+        @if (!isUnlocked(level.id)) {
+          <span class="lock">🔒</span>
+        }
+      </button>
+    }
+  </div>
+
+  <footer class="progress-note">⭐ Sammle Sterne und entdecke neue Level!</footer>
+</main>

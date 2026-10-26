@@ -1,0 +1,163 @@
+
+.level-page {
+  width: min(100%, 1000px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.level-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: white;
+  box-shadow: var(--shadow-card);
+  font-size: 1.5rem;
+}
+
+.heading {
+  text-align: center;
+
+  h1 {
+    display: inline;
+    margin-left: 8px;
+    font-size: clamp(1.7rem, 5vw, 2.4rem);
+  }
+
+  p {
+    margin: 8px 0 0;
+  }
+}
+
+.rainbow {
+  display: inline;
+  font-size: 2rem;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.level-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 190px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  overflow: hidden;
+  border: 3px solid white;
+  border-radius: 24px;
+  background: #ddf5ee;
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+
+  strong {
+    font-size: 0.95rem;
+  }
+
+  small {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  &:nth-child(3n + 2) {
+    background: #dff3ff;
+  }
+
+  &:nth-child(3n) {
+    background: #eee7ff;
+  }
+
+  &:nth-child(4n) {
+    background: #fff0c7;
+  }
+}
+
+.card-top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.level-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: #2588e8;
+  color: white;
+  font-weight: 800;
+}
+
+.stars {
+  color: #bdc7ce;
+  font-size: 0.9rem;
+
+  .earned {
+    color: #ffb51b;
+  }
+}
+
+.level-emoji {
+  font-size: 2.5rem;
+}
+
+.locked {
+  opacity: 0.65;
+  filter: saturate(0.65);
+}
+
+.lock {
+  position: absolute;
+  top: 42px;
+  right: 10px;
+}
+
+.progress-note {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 24px;
+  background: #fff0c7;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (min-width: 600px) {
+  .level-page {
+    padding: 28px 24px 40px;
+  }
+
+  .level-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .level-card {
+    min-height: 220px;
+    padding: 16px;
+  }
+
+  .level-emoji {
+    font-size: 3rem;
+  }
+}
