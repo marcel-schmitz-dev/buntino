@@ -1,15 +1,13 @@
-@if (screen === 'home') {
-  <app-home (selectMode)="openLevels($event)" />
-}
+<div class="screen-content">
+  @if (screen === 'home') {
+    <app-home (selectMode)="openLevels($event)" />
+  }
 
-@if (screen === 'levels') {
-  <app-level-select
-    [mode]="mode"
-    (back)="goHome()"
-    (startLevel)="startLevel($event)"
-  />
-}
+  @if (screen === 'levels') {
+    <app-level-select [mode]="mode" (back)="goHome()" (startLevel)="startLevel($event)" />
+  }
 
-@if (screen === 'game') {
-  <app-color-game (back)="goToLevels()" />
-}
+  @if (screen === 'game') {
+    <app-color-game (back)="goToLevels()" />
+  }
+</div>

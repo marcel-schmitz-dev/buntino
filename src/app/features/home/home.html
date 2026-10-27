@@ -1,38 +1,73 @@
 <main class="home">
   <header class="topbar">
-    <button class="icon-button" aria-label="Ton einschalten oder ausschalten">🔊</button>
+    <button class="icon-button" aria-label="Ton einschalten oder ausschalten">
+      <span class="btn-icon">🔊</span>
+    </button>
 
     <div class="brand">
-      <h1>Buntino<span>★</span></h1>
-      <p>Entdecken · Lernen · Wachsen</p>
+      <div class="logo-container">
+        <svg viewBox="0 0 450 120" class="curved-logo-svg">
+          <path id="curve-title" d="M 40,100 Q 225,25 410,100" fill="transparent" />
+          <path id="curve-subtitle" d="M 70,112 Q 225,55 380,112" fill="transparent" />
+
+          <text class="svg-buntino-text">
+            <textPath href="#curve-title" startOffset="44%" text-anchor="middle">
+              <tspan class="l-b">B</tspan>
+              <tspan class="l-u">u</tspan>
+              <tspan class="l-n">n</tspan>
+              <tspan class="l-t">t</tspan>
+              <tspan class="l-i">i</tspan>
+              <tspan class="l-n2">n</tspan>
+            </textPath>
+          </text>
+
+          <text class="svg-subtitle-text">
+            <textPath href="#curve-subtitle" startOffset="50%" text-anchor="middle">
+              Entdecken · Lernen · Wachsen
+            </textPath>
+          </text>
+        </svg>
+
+        <div class="star-o-badge" aria-hidden="true">★</div>
+      </div>
     </div>
 
-    <button class="icon-button" aria-label="Einstellungen">⚙️</button>
+    <button class="icon-button" aria-label="Einstellungen">
+      <span class="btn-icon">⚙️</span>
+    </button>
   </header>
 
   <section class="welcome">
     <h2>Hallo, kleine Entdecker!</h2>
-    <p>Wähle deinen Modus und starte dein buntes Lernabenteuer!</p>
+    <p>Wähle, wie alt du bist und starte dein buntes Lernabenteuer!</p>
   </section>
 
   <section class="mode-grid" aria-label="Spielmodus wählen">
     <article class="mode-card discover">
-      <div class="mascot" aria-hidden="true">🦁</div>
-      <h3>Entdecker</h3>
-      <p>Für die Kleinsten</p>
-      <button (click)="selectMode.emit('discover')">Los geht's! →</button>
+      <div class="card-content">
+        <div class="card-header">
+          <h3>Entdecker</h3>
+          <span class="age-tag">2 Jahre</span>
+        </div>
+
+        <button class="btn-discover" (click)="selectMode.emit('discover')">Los geht's! →</button>
+      </div>
     </article>
 
     <article class="mode-card research">
-      <div class="mascot" aria-hidden="true">🦊</div>
-      <h3>Forscher</h3>
-      <p>Für neugierige Köpfe</p>
-      <button (click)="selectMode.emit('research')">Los geht's! →</button>
+      <div class="card-content">
+        <div class="card-header">
+          <h3>Forscher</h3>
+          <span class="age-tag">8 Jahre</span>
+        </div>
+
+        <button class="btn-research" (click)="selectMode.emit('research')">Los geht's! →</button>
+      </div>
     </article>
   </section>
 
   <section class="worlds">
-    <h2>Unsere Lernwelten</h2>
+    <h2><span class="sub-arrow">➔</span> Unsere Lernwelten <span class="sub-arrow">➔</span></h2>
 
     <div class="world-grid">
       @for (world of worlds; track world.name) {
