@@ -1,8 +1,17 @@
-
 <main class="game">
   <header>
     <button class="back-button" (click)="back.emit()">← Zurück</button>
-    <span>Frage {{ questionIndex + 1 }} von {{ questions.length }}</span>
+
+    <span> Frage {{ questionIndex + 1 }} von {{ questions.length }} </span>
+
+    <button
+      class="speaker-button"
+      (click)="toggleSpeech()"
+      [attr.aria-label]="speechEnabled ? 'Ton ausschalten' : 'Ton einschalten'"
+      [attr.aria-pressed]="speechEnabled"
+    >
+      {{ speechEnabled ? '🔊' : '🔇' }}
+    </button>
   </header>
 
   @if (!finished) {
