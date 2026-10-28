@@ -1,5 +1,7 @@
+
 import { Component, OnInit, output } from '@angular/core';
 import { Speech } from '../../../core/speech';
+import { Progress } from '../../../core/progress';
 
 @Component({
   selector: 'app-color-game',
@@ -12,12 +14,19 @@ export class ColorGame implements OnInit {
   readonly back = output<void>();
 
   speechEnabled = true;
+  questionIndex = 0;
+  feedback = '';
+  isCorrect = false;
+  finished = false;
+
+  correctAnswers = 0;
+  starsEarned = 0;
 
   readonly questions = [
     {
       object: 'Apfel',
-      emoji: '🍎',
       spokenQuestion: 'Welche Farbe hat der Apfel?',
+      emoji: '🍎',
       options: [
         { name: 'Rot', color: '#ff5d5d' },
         { name: 'Blau', color: '#4da9f7' },
@@ -26,8 +35,8 @@ export class ColorGame implements OnInit {
     },
     {
       object: 'Banane',
-      emoji: '🍌',
       spokenQuestion: 'Welche Farbe hat die Banane?',
+      emoji: '🍌',
       options: [
         { name: 'Grün', color: '#54cdb0' },
         { name: 'Gelb', color: '#ffca55' },
@@ -35,23 +44,21 @@ export class ColorGame implements OnInit {
       answer: 'Gelb',
     },
     {
-  object: 'Blaubeere',
-  spokenQuestion: 'Welche Farbe hat die Blaubeere?',
-  emoji: '🫐',
-  options: [
-    { name: 'Blau', color: '#4da9f7' },
-    { name: 'Rot', color: '#ff5d5d' },
-  ],
-  answer: 'Blau',
-},
+      object: 'Blaubeere',
+      spokenQuestion: 'Welche Farbe hat die Blaubeere?',
+      emoji: '🫐',
+      options: [
+        { name: 'Blau', color: '#4da9f7' },
+        { name: 'Rot', color: '#ff5d5d' },
+      ],
+      answer: 'Blau',
+    },
   ];
 
-  questionIndex = 0;
-  feedback = '';
-  finished = false;
-  isCorrect = false;
-
-  constructor(private speech: Speech) {}
+  constructor(
+    private speech: Speech,
+    private progress: Progress
+  ) {}
 
   ngOnInit(): void {
     this.speechEnabled = this.speech.isEnabled();
@@ -67,7 +74,13 @@ export class ColorGame implements OnInit {
     this.speech.setEnabled(this.speechEnabled);
 
     if (this.speechEnabled) {
-      this.announceQuestion();
+      if (this.finished) {
+        this.speech.speak(
+          'Du hast alle drei Fragen gespielt. Das hast du toll gemacht!'
+        );
+      } else {
+        this.announceQuestion();
+      }
     }
   }
 
@@ -75,32 +88,31 @@ export class ColorGame implements OnInit {
     this.speech.speak(this.question.spokenQuestion);
   }
 
-  
-choose(color: string): void {
-  if (this.finished || this.isCorrect) {
-    return;
+  choose(color: string): void {
+    if (this.finished || this.isCorrect) {
+      return;
+    }
+
+    if (color === this.question.answer) {
+      this.isCorrect = true;
+      this.feedback = 'Super gemacht! ⭐';
+      this.correctAnswers++;
+
+      this.speech.speak(
+        `Super gemacht! Das ist ${this.question.answer}!`
+      );
+    } else {
+      this.isCorrect = false;
+      this.feedback = 'Noch nicht ganz. Versuche es noch einmal! 😊';
+
+      this.speech.speak(
+        'Noch nicht ganz. Versuche es noch einmal!'
+      );
+    }
   }
-
-  if (color === this.question.answer) {
-    this.isCorrect = true;
-    this.feedback = 'Super gemacht! ⭐';
-
-    this.speech.speak(
-      `Super gemacht! Das ist ${this.question.answer}!`
-    );
-  } else {
-    this.isCorrect = false;
-    this.feedback = 'Noch nicht ganz. Versuche es noch einmal! 😊';
-
-    this.speech.speak(
-      'Noch nicht ganz. Versuche es noch einmal!'
-    );
-  }
-}
-
 
   next(): void {
-    if (!this.feedback) {
+    if (!this.isCorrect || this.finished) {
       return;
     }
 
@@ -108,11 +120,16 @@ choose(color: string): void {
       this.questionIndex++;
       this.feedback = '';
       this.isCorrect = false;
+
       this.announceQuestion();
     } else {
       this.finished = true;
+      this.starsEarned = this.correctAnswers;
+
+      this.progress.saveLevel(1, this.starsEarned);
+
       this.speech.speak(
-        'Du hast alle drei Fragen gespielt. Das hast du toll gemacht!'
+        `Du hast alle drei Fragen gespielt und ${this.starsEarned} Sterne gesammelt. Das hast du toll gemacht!`
       );
     }
   }
@@ -120,8 +137,11 @@ choose(color: string): void {
   restart(): void {
     this.questionIndex = 0;
     this.feedback = '';
-    this.finished = false;
     this.isCorrect = false;
+    this.finished = false;
+    this.correctAnswers = 0;
+    this.starsEarned = 0;
+
     this.announceQuestion();
   }
 }

@@ -1,8 +1,14 @@
 <main class="game">
   <header>
-    <button class="back-button" (click)="back.emit()">← Zurück</button>
+    <button class="back-button" (click)="back.emit()" aria-label="Zurück zur Level-Auswahl">
+      ← Zurück
+    </button>
 
-    <span> Frage {{ questionIndex + 1 }} von {{ questions.length }} </span>
+    @if (!finished) {
+      <span> Frage {{ questionIndex + 1 }} von {{ questions.length }} </span>
+    } @else {
+      <span>Geschafft! 🎉</span>
+    }
 
     <button
       class="speaker-button"
@@ -16,8 +22,11 @@
 
   @if (!finished) {
     <section class="question">
-      <div class="fruit">{{ question.emoji }}</div>
-      <h1>Welche Farbe ist das?</h1>
+      <div class="fruit" aria-hidden="true">
+        {{ question.emoji }}
+      </div>
+
+      <h1>Welche Farbe hat das Objekt?</h1>
       <p>Tippe auf die passende Farbe!</p>
 
       <div class="answers">
@@ -25,6 +34,7 @@
           <button
             class="answer"
             [style.background]="option.color"
+            [disabled]="isCorrect"
             [attr.aria-label]="option.name"
             (click)="choose(option.name)"
           >
@@ -39,20 +49,31 @@
 
           @if (isCorrect) {
             <button class="next-button" (click)="next()">
-              {{ questionIndex === questions.length - 1 ? 'Fertig!' : 'Weiter →' }}
+              {{ questionIndex === questions.length - 1 ? 'Fertig! 🎉' : 'Weiter →' }}
             </button>
           } @else {
-            <p>Tippe auf die andere Farbe! 👆</p>
+            <p>Du schaffst das! Tippe auf die andere Farbe. 👆</p>
           }
         </div>
       }
     </section>
   } @else {
     <section class="question">
-      <div class="fruit">🏆</div>
+      <div class="fruit" aria-hidden="true">🏆</div>
+
       <h1>Das hast du toll gemacht!</h1>
       <p>Du hast alle drei Fragen gespielt.</p>
-      <button class="next-button" (click)="restart()">Nochmal spielen</button>
+
+      <div class="result-stars" aria-label="Erreichte Sterne">
+        @for (star of [1, 2, 3]; track star) {
+          <span [class.earned]="star <= starsEarned">★</span>
+        }
+      </div>
+
+      <p>Du hast {{ starsEarned }} von 3 Sternen gesammelt!</p>
+
+      <button class="next-button" (click)="restart()">Nochmal spielen 🔄</button>
+
       <button class="back-button" (click)="back.emit()">Level-Auswahl</button>
     </section>
   }

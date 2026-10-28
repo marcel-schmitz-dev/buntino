@@ -37,6 +37,25 @@
   box-shadow: var(--shadow-card);
 }
 
+
+.result-stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  font-size: 3rem;
+
+  span {
+    color: #cbd5dc;
+  }
+
+  .earned {
+    color: #ffb51b;
+    transform: scale(1.1);
+  }
+}
+
+
 .question {
   margin-top: 36px;
   text-align: center;
