@@ -8,12 +8,12 @@
 
     <div class="brand">
       <div class="logo-container">
-        <svg viewBox="0 0 450 120" class="curved-logo-svg">
-          <path id="curve-title" d="M 40,100 Q 225,25 410,100" fill="transparent" />
-          <path id="curve-subtitle" d="M 70,112 Q 225,55 380,112" fill="transparent" />
+        <svg viewBox="0 0 540 180" class="curved-logo-svg">
+          <path id="curve-title" d="M 45,140 Q 270,20 495,140" fill="transparent" />
+          <path id="curve-subtitle" d="M 75,160 Q 270,75 465,160" fill="transparent" />
 
           <text class="svg-buntino-text">
-            <textPath href="#curve-title" startOffset="44%" text-anchor="middle">
+            <textPath href="#curve-title" startOffset="48%" text-anchor="middle">
               <tspan class="l-b">B</tspan>
               <tspan class="l-u">u</tspan>
               <tspan class="l-n">n</tspan>
@@ -30,7 +30,8 @@
           </text>
         </svg>
 
-        <div class="star-o-badge" aria-hidden="true">★</div>
+        <!-- Das O mit dem Stern direkt am Ende des Buntin-Schriftzugs -->
+        <div class="logo-star-o" aria-hidden="true">★</div>
       </div>
     </div>
 
@@ -75,13 +76,15 @@
 
     <div class="world-grid">
       @for (world of worlds; track world.name) {
-        <button class="world-card" [class]="world.color" (click)="selectMode.emit('discover')">
-          <span class="world-emoji">{{ world.emoji }}</span>
-          <span>{{ world.name }}</span>
+        <button class="world-card" (click)="selectMode.emit('discover')">
+          <img [src]="world.image" [alt]="world.name" class="world-card-bg-img" />
+          <div class="world-card-content">
+            <span class="world-title-badge">{{ world.name }}</span>
+          </div>
         </button>
       }
     </div>
   </section>
 
-  <footer>Gemeinsam die Welt entdecken! 💗</footer>
+  <footer class="footer">Gemeinsam die Welt entdecken! 💗</footer>
 </main>

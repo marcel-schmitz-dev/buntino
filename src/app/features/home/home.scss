@@ -1,10 +1,11 @@
 :host {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   position: relative;
+  overflow-y: auto;
   overflow: hidden;
 
   .bg-wiese {
@@ -13,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Füllt den Hintergrund komplett aus */
+    object-fit: cover;
     z-index: -1;
   }
 }
@@ -21,7 +22,7 @@
 .home {
   width: 100%;
   height: 100%;
-  max-width: none; /* Keine Begrenzung mehr, nutzt den ganzen Platz */
+  max-width: none;
   margin: 0;
   padding: 16px 24px 24px;
   position: relative;
@@ -47,7 +48,7 @@
 
 .logo-container {
   position: relative;
-  max-width: 360px;
+  max-width: 440px;
   margin: 0 auto;
 }
 
@@ -58,10 +59,17 @@
 }
 
 .svg-buntino-text {
-  font-size: 68px;
+  font-size: 100px;
   font-weight: 900;
   font-family: system-ui, -apple-system, sans-serif;
   
+  paint-order: stroke fill;
+  stroke: white;
+  stroke-width: 15px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 6px 12px rgba(23, 69, 111, 0.2));
+
   .l-b { fill: #2bb5f6; }
   .l-u { fill: #38a9f5; }
   .l-n { fill: #ff8278; }
@@ -71,27 +79,28 @@
 }
 
 .svg-subtitle-text {
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 700;
-  fill: #3b597a;
+  fill: #274b70;
   font-family: system-ui, -apple-system, sans-serif;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
 }
 
-.star-o-badge {
+.logo-star-o {
   position: absolute;
-  right: 68px;
-  top: 18px;
-  width: 38px;
-  height: 38px;
+  right: 25px;
+  top: 40px;
+  width: 68px;
+  height: 68px;
   background: linear-gradient(135deg, #ffca55 0%, #ff9e2c 100%);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 10px rgba(255, 158, 44, 0.4);
-  border: 3px solid white;
+  font-size: 2rem;
+  box-shadow: 0 6px 16px rgba(255, 158, 44, 0.45);
+  border: 5px solid white;
 }
 
 .icon-button {
@@ -126,19 +135,19 @@
 
 .welcome {
   max-width: 500px;
-  margin: 12px auto 20px;
+  margin: 4px auto 10px;
   text-align: center;
 
   h2 {
     margin: 0 0 4px;
-    font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
     color: #17456f;
     font-weight: 900;
   }
 
   p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #4a637b;
     font-weight: 600;
     line-height: 1.4;
@@ -148,9 +157,16 @@
 .mode-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  max-width: 580px;
+  gap: 16px;
+  max-width: 650px;
   margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .mode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .mode-card {
@@ -159,7 +175,7 @@
   border-radius: 36px;
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(23, 69, 111, 0.12);
-  min-height: 340px;
+  min-height: 290px;
   transition: transform 0.2s ease;
 
   &:hover {
@@ -182,8 +198,8 @@
   position: relative;
   z-index: 2;
   height: 100%;
-  min-height: 332px;
-  padding: 18px;
+  min-height: 282px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -200,14 +216,14 @@
 
   h3 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 900;
     color: #1a3c60;
   }
 
   .age-tag {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #526c82;
   }
@@ -215,12 +231,12 @@
 
 .btn-discover {
   width: 100%;
-  min-height: 50px;
+  min-height: 46px;
   border: 0;
   border-radius: 25px;
   background: linear-gradient(180deg, #ff9e2c 0%, #ff7e1d 100%);
   color: white;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   box-shadow: 0 6px 18px rgba(255, 130, 30, 0.4);
   cursor: pointer;
@@ -232,12 +248,12 @@
 
 .btn-research {
   width: 100%;
-  min-height: 50px;
+  min-height: 46px;
   border: 0;
   border-radius: 25px;
   background: linear-gradient(180deg, #1ea5ff 0%, #0084f7 100%);
   color: white;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 800;
   box-shadow: 0 6px 18px rgba(0, 132, 247, 0.4);
   cursor: pointer;
@@ -248,13 +264,11 @@
 }
 
 .worlds {
-  margin-top: 32px;
-
   h2 {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     text-align: center;
     color: #17456f;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
     
     .sub-arrow {
@@ -267,44 +281,69 @@
 .world-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
 
 .world-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 95px;
-  gap: 6px;
-  padding: 12px;
+  justify-content: flex-end;
+  min-height: 130px;
   border: 3px solid white;
   border-radius: 24px;
-  color: #17456f;
-  font-size: 1rem;
-  font-weight: 800;
-  box-shadow: 0 8px 20px rgba(23, 69, 111, 0.08);
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(23, 69, 111, 0.12);
   cursor: pointer;
+  padding: 10px;
+  background: #f0f4f8;
+  transition: transform 0.2s ease;
 
-  .world-emoji {
-    font-size: 2.2rem;
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .world-card-bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+
+  .world-card-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .world-title-badge {
+    background: transparent;
+    padding: 2px 6px;
+    color: #1a1a1a;
+    font-size: 1.05rem;
+    font-weight: 900;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 0 6px rgba(255, 255, 255, 0.8);
+    box-shadow: none;
   }
 }
 
-.pink { background: #ffd9ec; }
-.blue { background: #c9edff; }
-.green { background: #d7f5bd; }
-.purple { background: #e8dcff; }
-
-footer {
-  margin-top: 28px;
+.footer {
   text-align: center;
   font-size: 0.95rem;
-  color: #4a637b;
-  font-weight: 600;
+  font-weight: 700;
+  color: #17456f;
+  margin-top: 10px;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 650px) {
   .mode-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

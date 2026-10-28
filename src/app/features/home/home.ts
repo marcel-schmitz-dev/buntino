@@ -11,9 +11,9 @@ export class Home {
   readonly selectMode = output<'discover' | 'research'>();
 
   readonly worlds = [
-    { name: 'Farben', emoji: '🌈', color: 'pink' },
-    { name: 'Formen', emoji: '🔺', color: 'blue' },
-    { name: 'Obst', emoji: '🍎', color: 'green' },
-    { name: 'Gemüse', emoji: '🥕', color: 'purple' },
+    { name: 'Farben', image: 'assets/regenbogen.webp', color: 'pink' },
+    { name: 'Formen', image: 'assets/formen.webp', color: 'blue' },
+    { name: 'Obst', image: 'assets/obst.webp', color: 'green' },
+    { name: 'Gemüse', image: 'assets/gemüse.webp', color: 'purple' },
   ];
 }

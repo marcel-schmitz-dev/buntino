@@ -18,6 +18,11 @@
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html, body {
@@ -28,6 +33,7 @@ html, body {
   background-color: #0b0f15;
   font-family: system-ui, -apple-system, sans-serif;
   color: var(--color-text);
+  overflow-y: auto;
   overflow: hidden;
   display: flex;
   justify-content: center;
