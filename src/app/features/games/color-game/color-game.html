@@ -36,9 +36,14 @@
       @if (feedback) {
         <div class="feedback" aria-live="polite">
           <h2>{{ feedback }}</h2>
-          <button class="next-button" (click)="next()">
-            {{ questionIndex === questions.length - 1 ? 'Fertig!' : 'Weiter →' }}
-          </button>
+
+          @if (isCorrect) {
+            <button class="next-button" (click)="next()">
+              {{ questionIndex === questions.length - 1 ? 'Fertig!' : 'Weiter →' }}
+            </button>
+          } @else {
+            <p>Tippe auf die andere Farbe! 👆</p>
+          }
         </div>
       }
     </section>

@@ -35,20 +35,21 @@ export class ColorGame implements OnInit {
       answer: 'Gelb',
     },
     {
-      object: 'Schmetterling',
-      emoji: '🦋',
-      spokenQuestion: 'Welche Farbe hat der Schmetterling?',
-      options: [
-        { name: 'Blau', color: '#4da9f7' },
-        { name: 'Rot', color: '#ff5d5d' },
-      ],
-      answer: 'Blau',
-    },
+  object: 'Blaubeere',
+  spokenQuestion: 'Welche Farbe hat die Blaubeere?',
+  emoji: '🫐',
+  options: [
+    { name: 'Blau', color: '#4da9f7' },
+    { name: 'Rot', color: '#ff5d5d' },
+  ],
+  answer: 'Blau',
+},
   ];
 
   questionIndex = 0;
   feedback = '';
   finished = false;
+  isCorrect = false;
 
   constructor(private speech: Speech) {}
 
@@ -74,25 +75,29 @@ export class ColorGame implements OnInit {
     this.speech.speak(this.question.spokenQuestion);
   }
 
-  choose(color: string): void {
-    if (this.finished || this.feedback) {
-      return;
-    }
-
-    if (color === this.question.answer) {
-      this.feedback = 'Super gemacht! ⭐';
-
-      this.speech.speak(
-        `Super gemacht! Das ist ${this.question.answer}!`
-      );
-    } else {
-      this.feedback = 'Versuch es noch einmal! 😊';
-
-      this.speech.speak(
-        `Noch nicht ganz. Versuche es noch einmal!`
-      );
-    }
+  
+choose(color: string): void {
+  if (this.finished || this.isCorrect) {
+    return;
   }
+
+  if (color === this.question.answer) {
+    this.isCorrect = true;
+    this.feedback = 'Super gemacht! ⭐';
+
+    this.speech.speak(
+      `Super gemacht! Das ist ${this.question.answer}!`
+    );
+  } else {
+    this.isCorrect = false;
+    this.feedback = 'Noch nicht ganz. Versuche es noch einmal! 😊';
+
+    this.speech.speak(
+      'Noch nicht ganz. Versuche es noch einmal!'
+    );
+  }
+}
+
 
   next(): void {
     if (!this.feedback) {
@@ -102,6 +107,7 @@ export class ColorGame implements OnInit {
     if (this.questionIndex < this.questions.length - 1) {
       this.questionIndex++;
       this.feedback = '';
+      this.isCorrect = false;
       this.announceQuestion();
     } else {
       this.finished = true;
@@ -115,6 +121,7 @@ export class ColorGame implements OnInit {
     this.questionIndex = 0;
     this.feedback = '';
     this.finished = false;
+    this.isCorrect = false;
     this.announceQuestion();
   }
 }
