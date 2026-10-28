@@ -1,29 +1,43 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output, inject } from '@angular/core';
+import { LEARNING_CATEGORIES } from '../../core/learning-data';
+import { Progress } from '../../core/progress';
+import { LearningCategoryId } from '../../shared/models/learning-content';
 
 @Component({
-  imports: [],
   selector: 'app-level-select',
+  imports: [],
   styleUrl: './level-select.scss',
   templateUrl: './level-select.html',
 })
 export class LevelSelect {
+  private readonly progress = inject(Progress);
+
   readonly mode = input<'discover' | 'research'>('discover');
+  readonly categoryId = input<LearningCategoryId>('colors');
+
   readonly back = output<void>();
   readonly startLevel = output<number>();
 
-  readonly levels = [
-    { id: 1, title: 'Grundfarben', subtitle: 'Rot, Blau und Gelb', emoji: '🎨', stars: 3 },
-    { id: 2, title: 'Naturfarben', subtitle: 'Farben in der Natur', emoji: '🍃', stars: 0 },
-    { id: 3, title: 'Farben-Mix', subtitle: 'Welche Farbe fehlt?', emoji: '🎈', stars: 0 },
-    { id: 4, title: 'Hell und dunkel', subtitle: 'Entdecke Schattierungen', emoji: '🦋', stars: 0 },
-    { id: 5, title: 'Farben-Rad', subtitle: 'Finde die richtige Farbe', emoji: '🌈', stars: 0 },
-    { id: 6, title: 'Regenbogen', subtitle: 'Alle Farben zusammen', emoji: '☁️', stars: 0 },
-    { id: 7, title: 'Kreativ', subtitle: 'Male die Welt bunt', emoji: '🖌️', stars: 0 },
-    { id: 8, title: 'Farben-Quiz', subtitle: 'Teste dein Wissen', emoji: '⭐', stars: 0 },
-    { id: 9, title: 'Überraschung', subtitle: 'Eine bunte Belohnung', emoji: '🎁', stars: 0 },
-  ];
+  readonly category = computed(() =>
+    LEARNING_CATEGORIES.find(
+      (category) => category.id === this.categoryId(),
+    ) ?? LEARNING_CATEGORIES[0],
+  );
+
+  readonly levels = computed(() =>
+    this.category().levels.map((level) => ({
+      ...level,
+      subtitle: level.description,
+      emoji: this.category().emoji,
+      stars: this.progress.getStars(
+        level.id,
+        this.category().id,
+      ),
+    })),
+  );
 
   isUnlocked(id: number): boolean {
     return id === 1;
   }
 }
+

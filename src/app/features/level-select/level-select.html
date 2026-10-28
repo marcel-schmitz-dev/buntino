@@ -3,16 +3,16 @@
     <button class="icon-button" (click)="back.emit()" aria-label="Zurück">←</button>
 
     <div class="heading">
-      <div class="rainbow">🌈</div>
-      <h1>Farben</h1>
-      <p>Welche Farbe ist das?</p>
+      <div class="rainbow">{{ category().emoji }}</div>
+      <h1>{{ category().title }}</h1>
+      <p>{{ category().description }}</p>
     </div>
 
     <button class="icon-button" aria-label="Ton">🔊</button>
   </header>
 
   <div class="level-grid">
-    @for (level of levels; track level.id) {
+    @for (level of levels(); track level.id) {
       <button
         class="level-card"
         [class.locked]="!isUnlocked(level.id)"

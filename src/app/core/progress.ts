@@ -1,5 +1,5 @@
-
 import { Injectable } from '@angular/core';
+import { LearningCategoryId } from '../shared/models/learning-content';
 
 interface LevelProgress {
   stars: number;
@@ -21,24 +21,47 @@ export class Progress {
       const saved = localStorage.getItem(this.storageKey);
 
       return saved
-        ? JSON.parse(saved) as SavedProgress
+        ? (JSON.parse(saved) as SavedProgress)
         : { levels: {} };
     } catch {
       return { levels: {} };
     }
   }
 
-  getStars(levelId: number): number {
-    return this.load().levels[String(levelId)]?.stars ?? 0;
+  private createKey(
+    categoryId: LearningCategoryId,
+    levelId: number,
+  ): string {
+    return `${categoryId}-${levelId}`;
   }
 
-  isCompleted(levelId: number): boolean {
-    return this.load().levels[String(levelId)]?.completed ?? false;
-  }
-
-  saveLevel(levelId: number, stars: number): void {
+  getStars(
+    levelId: number,
+    categoryId: LearningCategoryId = 'colors',
+  ): number {
     const progress = this.load();
-    const key = String(levelId);
+    const key = this.createKey(categoryId, levelId);
+
+    return progress.levels[key]?.stars ?? 0;
+  }
+
+  isCompleted(
+    levelId: number,
+    categoryId: LearningCategoryId = 'colors',
+  ): boolean {
+    const progress = this.load();
+    const key = this.createKey(categoryId, levelId);
+
+    return progress.levels[key]?.completed ?? false;
+  }
+
+  saveLevel(
+    levelId: number,
+    stars: number,
+    categoryId: LearningCategoryId = 'colors',
+  ): void {
+    const progress = this.load();
+    const key = this.createKey(categoryId, levelId);
     const previous = progress.levels[key];
 
     progress.levels[key] = {
@@ -49,7 +72,7 @@ export class Progress {
     try {
       localStorage.setItem(
         this.storageKey,
-        JSON.stringify(progress)
+        JSON.stringify(progress),
       );
     } catch {
     }
