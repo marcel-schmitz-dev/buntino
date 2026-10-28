@@ -75,9 +75,14 @@
     <h2><span class="sub-arrow">➔</span> Unsere Lernwelten <span class="sub-arrow">➔</span></h2>
 
     <div class="world-grid">
-      @for (world of worlds; track world.name) {
-        <button class="world-card" (click)="selectMode.emit('discover')">
+      @for (world of worlds; track world.id) {
+        <button
+          class="world-card"
+          (click)="selectCategory.emit(world.id)"
+          [attr.aria-label]="'Lernwelt ' + world.name + ' öffnen'"
+        >
           <img [src]="world.image" [alt]="world.name" class="world-card-bg-img" />
+
           <div class="world-card-content">
             <span class="world-title-badge">{{ world.name }}</span>
           </div>

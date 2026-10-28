@@ -1,10 +1,15 @@
 <div class="screen-content">
   @if (screen === 'home') {
-    <app-home (selectMode)="openLevels($event)" />
+    <app-home (selectMode)="openLevels($event)" (selectCategory)="selectCategory($event)" />
   }
 
   @if (screen === 'levels') {
-    <app-level-select [mode]="mode" (back)="goHome()" (startLevel)="startLevel($event)" />
+    <app-level-select
+      [mode]="mode"
+      [categoryId]="selectedCategory"
+      (back)="goHome()"
+      (startLevel)="startLevel($event)"
+    />
   }
 
   @if (screen === 'game') {
