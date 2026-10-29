@@ -13,6 +13,10 @@
   }
 
   @if (screen === 'game') {
-    <app-color-game [categoryId]="selectedCategory" (back)="goToLevels()" />
+    <app-color-game
+  [categoryId]="selectedCategory"
+  [levelId]="selectedLevelId"
+  (back)="goToLevels()"
+/>
   }
 </div>

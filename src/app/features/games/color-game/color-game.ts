@@ -15,6 +15,7 @@ import { LearningCategoryId, LearningQuestion } from '../../../shared/models/lea
 export class ColorGame implements OnInit {
   readonly back = output<void>();
   readonly categoryId = input<LearningCategoryId>('colors');
+  readonly levelId = input<number>(1);
 
   speechEnabled = true;
   questionIndex = 0;
@@ -34,15 +35,23 @@ export class ColorGame implements OnInit {
     this.announceQuestion();
   }
 
-  get category() {
-    return LEARNING_CATEGORIES.find(
-      (item) => item.id === this.categoryId()
-    ) ?? LEARNING_CATEGORIES[0];
-  }
+  
+get category() {
+  return LEARNING_CATEGORIES.find(
+    (item) => item.id === this.categoryId()
+  ) ?? LEARNING_CATEGORIES[0];
+}
 
-  get questions(): LearningQuestion[] {
-    return this.category.levels[0]?.questions ?? [];
-  }
+get level() {
+  return this.category.levels.find(
+    (item) => item.id === this.levelId()
+  ) ?? this.category.levels[0];
+}
+
+get questions(): LearningQuestion[] {
+  return this.level?.questions ?? [];
+}
+
 
   get question(): LearningQuestion {
     return this.questions[this.questionIndex];
@@ -114,10 +123,10 @@ export class ColorGame implements OnInit {
       this.starsEarned = this.correctAnswers;
 
       this.progress.saveLevel(
-        this.category.levels[0].id,
-        this.starsEarned,
-        this.category.id
-      );
+      this.level.id,
+      this.starsEarned,
+      this.category.id
+    );
 
       this.speech.speak(
         `Du hast alle ${this.questions.length} Fragen gespielt und ${this.starsEarned} Sterne gesammelt. Das hast du toll gemacht!`

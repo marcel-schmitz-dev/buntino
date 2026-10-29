@@ -3,6 +3,7 @@ import { Home } from './features/home/home';
 import { LevelSelect } from './features/level-select/level-select';
 import { ColorGame } from './features/games/color-game/color-game';
 import { LearningCategoryId } from './shared/models/learning-content';
+import { LEARNING_CATEGORIES } from './core/learning-data';
 
 type Screen = 'home' | 'levels' | 'game';
 type GameMode = 'discover' | 'research';
@@ -31,11 +32,26 @@ export class App {
   this.screen = 'levels';
 }
 
-  startLevel(levelId: number): void {
-  if (levelId === 1) {
-    this.screen = 'game';
+selectedLevelId = 1;
+
+  
+startLevel(levelId: number): void {
+  const category = LEARNING_CATEGORIES.find(
+    (item) => item.id === this.selectedCategory
+  );
+
+  const levelExists = category?.levels.some(
+    (level) => level.id === levelId
+  );
+
+  if (!levelExists) {
+    return;
   }
+
+  this.selectedLevelId = levelId;
+  this.screen = 'game';
 }
+
 
   goHome(): void {
     this.screen = 'home';

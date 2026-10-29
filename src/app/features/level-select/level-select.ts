@@ -36,8 +36,26 @@ export class LevelSelect {
     })),
   );
 
-  isUnlocked(id: number): boolean {
-    return id === 1;
+  
+isUnlocked(id: number): boolean {
+  const levels = this.category().levels;
+  const currentIndex = levels.findIndex((level) => level.id === id);
+  
+  if (currentIndex === -1) {
+    return false;
   }
+
+  if (currentIndex === 0) {
+    return true;
+  }
+
+  const previousLevel = levels[currentIndex - 1];
+
+  return this.progress.isCompleted(
+    previousLevel.id,
+    this.category().id,
+  );
+}
+
 }
 
