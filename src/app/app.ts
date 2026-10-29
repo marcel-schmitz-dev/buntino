@@ -32,10 +32,10 @@ export class App {
 }
 
   startLevel(levelId: number): void {
-    if (levelId === 1 && this.selectedCategory === 'colors') {
-      this.screen = 'game';
-    }
+  if (levelId === 1) {
+    this.screen = 'game';
   }
+}
 
   goHome(): void {
     this.screen = 'home';

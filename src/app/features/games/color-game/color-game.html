@@ -5,7 +5,7 @@
     </button>
 
     @if (!finished) {
-      <span> Frage {{ questionIndex + 1 }} von {{ questions.length }} </span>
+      <span>Frage {{ questionIndex + 1 }} von {{ questions.length }}</span>
     } @else {
       <span>Geschafft! 🎉</span>
     }
@@ -20,25 +20,28 @@
     </button>
   </header>
 
-  @if (!finished) {
+  @if (!finished && question) {
     <section class="question">
       <div class="fruit" aria-hidden="true">
         {{ question.emoji }}
       </div>
 
-      <h1>Welche Farbe hat das Objekt?</h1>
-      <p>Tippe auf die passende Farbe!</p>
+      <h1>{{ question.spokenQuestion }}</h1>
+      <p>Tippe auf die passende Antwort!</p>
 
       <div class="answers">
-        @for (option of question.options; track option.name) {
+        @for (option of question.options; track option.id) {
           <button
             class="answer"
-            [style.background]="option.color"
+            [style.background]="option.color || '#ffffff'"
             [disabled]="isCorrect"
-            [attr.aria-label]="option.name"
-            (click)="choose(option.name)"
+            [attr.aria-label]="option.label"
+            (click)="choose(option.id)"
           >
-            <span>{{ option.name }}</span>
+            @if (option.emoji) {
+              <span>{{ option.emoji }}</span>
+            }
+            <span>{{ option.label }}</span>
           </button>
         }
       </div>
@@ -52,17 +55,17 @@
               {{ questionIndex === questions.length - 1 ? 'Fertig! 🎉' : 'Weiter →' }}
             </button>
           } @else {
-            <p>Du schaffst das! Tippe auf die andere Farbe. 👆</p>
+            <p>Du schaffst das! Versuche es noch einmal. 👆</p>
           }
         </div>
       }
     </section>
-  } @else {
+  } @else if (finished) {
     <section class="question">
       <div class="fruit" aria-hidden="true">🏆</div>
 
       <h1>Das hast du toll gemacht!</h1>
-      <p>Du hast alle drei Fragen gespielt.</p>
+      <p>Du hast alle {{ questions.length }} Fragen gespielt.</p>
 
       <div class="result-stars" aria-label="Erreichte Sterne">
         @for (star of [1, 2, 3]; track star) {
@@ -70,10 +73,9 @@
         }
       </div>
 
-      <p>Du hast {{ starsEarned }} von 3 Sternen gesammelt!</p>
+      <p>Du hast {{ starsEarned }} von {{ questions.length }} Sternen gesammelt!</p>
 
       <button class="next-button" (click)="restart()">Nochmal spielen 🔄</button>
-
       <button class="back-button" (click)="back.emit()">Level-Auswahl</button>
     </section>
   }
