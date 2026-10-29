@@ -1,0 +1,15 @@
+{
+  "name": "Buntino",
+  "short_name": "buntino",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f15",
+  "theme_color": "#0b0f15",
+  "icons": [
+    {
+      "src": "favicon-buntino.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
