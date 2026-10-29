@@ -2,12 +2,13 @@
   "name": "Buntino",
   "short_name": "buntino",
   "start_url": "/buntino/",
+  "scope": "/buntino/",
   "display": "standalone",
   "background_color": "#0b0f15",
   "theme_color": "#0b0f15",
   "icons": [
     {
-      "src": "/buntino/favicon-buntino.webp",
+      "src": "/buntino/fuchs.webp",
       "sizes": "512x512",
       "type": "image/webp"
     }
