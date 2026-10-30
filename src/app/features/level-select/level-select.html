@@ -1,6 +1,10 @@
+<img src="assets/wiese.webp" alt="" class="bg-wiese" aria-hidden="true" />
+
 <main class="level-page">
   <header class="level-header">
-    <button class="icon-button" (click)="back.emit()" aria-label="Zurück">←</button>
+    <button class="icon-button" (click)="back.emit()" aria-label="Zurück">
+      <span class="btn-icon">←</span>
+    </button>
 
     <div class="heading">
       <div class="rainbow">{{ category().emoji }}</div>
@@ -8,7 +12,9 @@
       <p>{{ category().description }}</p>
     </div>
 
-    <button class="icon-button" aria-label="Ton">🔊</button>
+    <button class="icon-button" aria-label="Ton einschalten oder ausschalten">
+      <span class="btn-icon">🔊</span>
+    </button>
   </header>
 
   <div class="level-grid">
