@@ -20,6 +20,7 @@ export class ColorGame implements OnInit {
   speechEnabled = true;
   questionIndex = 0;
   feedback = '';
+  selectedId = ''; 
   isCorrect = false;
   finished = false;
   correctAnswers = 0;
@@ -87,6 +88,8 @@ get questions(): LearningQuestion[] {
       return;
     }
 
+    this.selectedId = optionId; 
+
     if (optionId === this.question.answerId) {
       this.isCorrect = true;
       this.feedback = 'Super gemacht! ⭐';
@@ -115,6 +118,7 @@ get questions(): LearningQuestion[] {
 
     if (this.questionIndex < this.questions.length - 1) {
       this.questionIndex++;
+      this.selectedId = '';
       this.feedback = '';
       this.isCorrect = false;
       this.announceQuestion();
@@ -136,6 +140,7 @@ get questions(): LearningQuestion[] {
 
   restart(): void {
     this.questionIndex = 0;
+    this.selectedId = '';
     this.feedback = '';
     this.isCorrect = false;
     this.finished = false;

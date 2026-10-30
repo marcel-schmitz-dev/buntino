@@ -1,82 +1,87 @@
-<main class="game">
-  <header>
-    <button class="back-button" (click)="back.emit()" aria-label="Zurück zur Level-Auswahl">
-      ← Zurück
+<main class="game-page" [attr.data-category]="categoryId()">
+  <header class="game-header">
+    <button class="icon-button" (click)="back.emit()" aria-label="Zurück">
+      <span class="btn-icon">←</span>
     </button>
 
     @if (!finished) {
-      <span>Frage {{ questionIndex + 1 }} von {{ questions.length }}</span>
-    } @else {
-      <span>Geschafft! 🎉</span>
+      <span class="progress-pill"> Frage {{ questionIndex + 1 }} von {{ questions.length }} </span>
     }
 
     <button
-      class="speaker-button"
+      class="icon-button"
       (click)="toggleSpeech()"
       [attr.aria-label]="speechEnabled ? 'Ton ausschalten' : 'Ton einschalten'"
-      [attr.aria-pressed]="speechEnabled"
     >
-      {{ speechEnabled ? '🔊' : '🔇' }}
+      <span class="btn-icon">{{ speechEnabled ? '🔊' : '🔇' }}</span>
     </button>
   </header>
 
-  @if (!finished && question) {
-    <section class="question">
-      <div class="fruit" aria-hidden="true">
-        {{ question.emoji }}
-      </div>
-
-      <h1>{{ question.spokenQuestion }}</h1>
-      <p>Tippe auf die passende Antwort!</p>
-
-      <div class="answers">
-        @for (option of question.options; track option.id) {
-          <button
-            class="answer"
-            [style.background]="option.color || '#ffffff'"
-            [disabled]="isCorrect"
-            [attr.aria-label]="option.label"
-            (click)="choose(option.id)"
-          >
-            @if (option.emoji) {
-              <span>{{ option.emoji }}</span>
-            }
-            <span>{{ option.label }}</span>
-          </button>
-        }
-      </div>
-
-      @if (feedback) {
-        <div class="feedback" aria-live="polite">
-          <h2>{{ feedback }}</h2>
-
-          @if (isCorrect) {
-            <button class="next-button" (click)="next()">
-              {{ questionIndex === questions.length - 1 ? 'Fertig! 🎉' : 'Weiter →' }}
-            </button>
+  <div class="game-body">
+    @if (!finished) {
+      <section class="game-main">
+        <div class="question-image-card">
+          @if (question.image) {
+            <img [src]="question.image" [alt]="question.objectName" class="main-img" />
           } @else {
-            <p>Du schaffst das! Versuche es noch einmal. 👆</p>
+            <div class="object-emoji">{{ question.emoji }}</div>
           }
         </div>
-      }
-    </section>
-  } @else if (finished) {
-    <section class="question">
-      <div class="fruit" aria-hidden="true">🏆</div>
 
-      <h1>Das hast du toll gemacht!</h1>
-      <p>Du hast alle {{ questions.length }} Fragen gespielt.</p>
+        <div class="question-card">
+          <h2>{{ question.spokenQuestion }}</h2>
+          <p>Tippe auf die passende Antwort!</p>
+        </div>
 
-      <div class="result-stars" aria-label="Erreichte Sterne">
-        @for (star of [1, 2, 3]; track star) {
-          <span [class.earned]="star <= starsEarned">★</span>
+        <div class="answers">
+          @for (option of question.options; track option.id) {
+            <button
+              class="answer"
+              [class.has-color]="option.color"
+              [class.correct]="isCorrect && option.id === question.answerId"
+              [class.wrong]="selectedId === option.id && option.id !== question.answerId"
+              [style.background]="option.color ?? null"
+              [disabled]="isCorrect"
+              (click)="choose(option.id)"
+            >
+              @if (option.image) {
+                <img [src]="option.image" [alt]="option.label" class="answer-img" />
+              }
+              @if (option.emoji) {
+                <span class="answer-emoji">{{ option.emoji }}</span>
+              }
+              <span>{{ option.label }}</span>
+            </button>
+          }
+        </div>
+      </section>
+
+      <footer class="game-footer">
+        @if (feedback) {
+          <span class="feedback">{{ feedback }}</span>
         }
-      </div>
+        @if (isCorrect) {
+          <button class="next-button" (click)="next()">Weiter →</button>
+        }
+      </footer>
+    } @else {
+      <section class="game-main">
+        <div class="result-card">
+          <div class="result-emoji">🎉</div>
+          <h2>Das hast du toll gemacht!</h2>
 
-      <p>Du hast {{ starsEarned }} von {{ questions.length }} Sternen gesammelt!</p>
+          <div class="result-stars" aria-label="Gesammelte Sterne">
+            @for (star of [1, 2, 3]; track star) {
+              <span [class.earned]="star <= starsEarned">★</span>
+            }
+          </div>
 
-      <button class="next-button" (click)="restart()">Nochmal spielen 🔄</button>
-      <button class="back-button" (click)="back.emit()">Level-Auswahl</button>
-    </section>
-  }
+          <div class="result-actions">
+            <button class="next-button secondary" (click)="restart()">Nochmal</button>
+            <button class="next-button" (click)="back.emit()">Weiter →</button>
+          </div>
+        </div>
+      </section>
+    }
+  </div>
 </main>
